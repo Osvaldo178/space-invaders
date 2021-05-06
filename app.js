@@ -89,23 +89,22 @@ function shoot(e) {
   let currentLaserIndex = currentShooterIndex
   //move the laser from the shooter to the alien invader
   function moveLaser() {
-    squares[currentLaserIndex < width].classList.remove('laser')
+    if(currentLaserIndex > squares.length) return;
+    squares[currentLaserIndex].classList.remove('laser')
     currentLaserIndex -= width
-    squares[currentLaserIndex < width].classList.add('laser')
-    if(squares[currentLaserIndex < width].classlist.contains('invader')) {
-      squares[currentLaserIndex < width].classList.remove('laser')
-      squares[currentLaserIndex < width].classList.remove('invader')
-      squares[currentLaserIndex < width].classList.add('boom')
-
+    if(currentLaserIndex > squares.length) return;
+    squares[currentLaserIndex].classList.add('laser')
+    if(squares[currentLaserIndex].classList.contains('invader')) {
+      squares[currentLaserIndex].classList.remove('laser')
+      squares[currentLaserIndex].classList.remove('invader')
+      squares[currentLaserIndex].classList.add('boom')
       setTimeout(() => squares[currentLaserIndex].classList.remove('boom'), 250)
       clearInterval(laserId)
-
       const alienTakenDown = alienInvaders.indexOf(currentLaserIndex)
       alienInvadersTakenDown.push(alienTakenDown)
       result++
       resultDisplay.textContent = result
     }
-
     if(currentLaserIndex < width) {
       clearInterval(laserId)
       setTimeout(() => squares[currentLaserIndex].classList.remove('laser'), 100)
